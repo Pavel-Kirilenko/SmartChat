@@ -1,2 +1,2 @@
 # SmartChat
-Chart as homework on Skillfactory courses
+Chat as homework on Skillfactory courses
