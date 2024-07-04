@@ -1,0 +1,16 @@
+#include "HeaderSC.h"
+#include <iostream>
+
+using namespace std;
+
+PersData::PersData()  // конструктор класса, используется при регистрации пользователя
+{
+	string persName = "A";      // инициализация временной переменной в которую будет записано имя пользователя
+	string persPassword = "B";  // инициализация временной переменной в которую будет записан пароль пользователя
+	cout << "Введите ваше имя:" << endl;  // ввов имени пользователя
+	cin >> persName;
+	cout << "Введите пароль:" << endl;
+	cin >> persPassword;                  // ввод пароля пользователя
+	this->persName = persName;
+	this->persPassword = persPassword;
+}
