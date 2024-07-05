@@ -14,3 +14,9 @@ PersData::PersData()  // конструктор класса, используется при регистрации пользо
 	this->persName = persName;
 	this->persPassword = persPassword;
 }
+PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
+	persNumber{ _persNumber }   // для хранения пользователей чата
+{
+	// здесь надо будет поймать исключение, если количество пользователей меньше нуля
+	if (_persNumber > 0) person = new PersData[_persNumber]{};
+}
