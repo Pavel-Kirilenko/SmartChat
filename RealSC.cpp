@@ -20,3 +20,12 @@ PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
 	// здесь надо будет поймать исключение, если количество пользователей меньше нуля
 	if (_persNumber > 0) person = new PersData[_persNumber]{};
 }
+PersDataArray::~PersDataArray()  // деструктор
+{
+	delete[] person;
+}
+PersData& PersDataArray::operator[](int index)  // функция доступа к элементу массива по индексу
+{
+	// здесь необходимо будет поймать исключение, если индекс выходит за пределы массива
+	return person[index];
+}
