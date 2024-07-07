@@ -14,6 +14,8 @@ PersData::PersData()  // конструктор класса, используется при регистрации пользо
 	this->persName = persName;
 	this->persPassword = persPassword;
 }
+
+
 PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
 	persNumber{ _persNumber }   // для хранения пользователей чата
 {
@@ -24,8 +26,17 @@ PersDataArray::~PersDataArray()  // деструктор
 {
 	delete[] person;
 }
+void PersDataArray::Erase()                     // функция удаления массива
+{
+	person = nullptr;
+	persNumber = 0;
+}
 PersData& PersDataArray::operator[](int index)  // функция доступа к элементу массива по индексу
 {
 	// здесь необходимо будет поймать исключение, если индекс выходит за пределы массива
 	return person[index];
+}
+int PersDataArray::getLength() const            // функция-геттер определения длины массива
+{
+	return persNumber;
 }
