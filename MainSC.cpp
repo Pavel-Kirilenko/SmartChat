@@ -6,8 +6,8 @@ using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "");
-	PersData user; // инициализация данных пользователя
-	PersDataArray arrayData(2);  // создание массива для храниения пользователей из десяти элементов
-	arrayData[1] = user;
+	PersDataArray arrayData(1);  // создание массива для храниения пользователей из десяти элементов
+	//cout << arrayData.getLenght;
+	arrayData.Erase();
 	return 0;
 }
