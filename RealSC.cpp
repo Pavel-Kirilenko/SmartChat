@@ -1,5 +1,6 @@
 #include "HeaderSC.h"
 #include <iostream>
+#include <cassert>    // for assert()
 
 using namespace std;
 
@@ -19,7 +20,7 @@ PersData::PersData()  // конструктор класса, используется при регистрации пользо
 PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
 	persNumber{ _persNumber }   // для хранения пользователей чата
 {
-	// здесь надо будет поймать исключение, если количество пользователей меньше нуля
+	assert(_persNumber >= 0);   // возможно модифицировать отбработку исключений с помощью throw/catch
 	if (_persNumber > 0) person = new PersData[_persNumber]{};
 }
 PersDataArray::~PersDataArray()  // деструктор
@@ -33,10 +34,10 @@ void PersDataArray::Erase()                     // функция удаления массива
 }
 PersData& PersDataArray::operator[](int index)  // функция доступа к элементу массива по индексу
 {
-	// здесь необходимо будет поймать исключение, если индекс выходит за пределы массива
+	assert(index >= 0 && index < persNumber);   // возможно модифицировать отбработку исключений с помощью throw/catch
 	return person[index];
 }
-int PersDataArray::getLength() const            // функция-геттер определения длины массива
+int PersDataArray::getLenght() const            // функция-геттер определения длины массива
 {
 	return persNumber;
 }
