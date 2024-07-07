@@ -3,22 +3,22 @@
 #include <cassert>    // for assert()
 
 using namespace std;
-
-PersData::PersData()  // конструктор класса, используется при регистрации пользователя
+PersData::PersData()  // конструктор по умолчанию
 {
-	string persName = "A";      // инициализация временной переменной в которую будет записано имя пользователя
-	string persPassword = "B";  // инициализация временной переменной в которую будет записан пароль пользователя
-	cout << "Введите ваше имя:" << endl;  // ввов имени пользователя
-	cin >> persName;
-	cout << "Введите пароль:" << endl;
-	cin >> persPassword;                  // ввод пароля пользователя
+	this->persName = "persName";
+	this->persPassword = "persPassword";
+	this->messageNum = 1;
+}
+PersData::PersData(string persName, string persPassword, int messageNum)  // конструктор класса, используется при регистрации пользователя
+{
 	this->persName = persName;
 	this->persPassword = persPassword;
+	this->messageNum = messageNum;
 }
 
 
 PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
-	persNumber{ _persNumber }   // для хранения пользователей чата
+	persNumber{ _persNumber }                   // для хранения пользователей чата
 {
 	assert(_persNumber >= 0);   // возможно модифицировать отбработку исключений с помощью throw/catch
 	if (_persNumber > 0) person = new PersData[_persNumber]{};
@@ -40,4 +40,30 @@ PersData& PersDataArray::operator[](int index)  // функция доступа к элементу ма
 int PersDataArray::getLenght() const            // функция-геттер определения длины массива
 {
 	return persNumber;
+}
+void PersDataArray::InsertBefore(PersData value, int index) // вставка элемента перед другим элементом с известным индексом
+{
+	assert(index >= 0 && index <= persNumber); // возможно модифицировать отбработку исключений с помощью throw/catch
+	PersData* data{ new PersData[persNumber + 1] };      // создание нового массива на единицу длиннее предыдущего
+	copy_n(person, index, data);               // копирование всех элементов до индекса
+	data[index] = value;                       // добавление нового элемента в массив
+	copy_n(person + index, persNumber - index, data + index + 1); // копирование всех элементов после индекса
+	delete[] person;       // удаление старого массива и использование нового взамен
+	person = data;
+	++persNumber;
+}
+void PersDataArray::Remove(int index)            // функция удаления элемента с известным индексом
+{
+	assert(index >= 0 && index < persNumber); // возможно модифицировать отбработку исключений с помощью throw/catch
+	if (persNumber == 1)            // если в массиве всего один элемент, то массив удаляется
+	{
+		Erase();
+		return;
+	}
+	PersData* data{ new PersData[persNumber - 1] }; // создание нового массива с длиной на один элемент короче
+	copy_n(person, index, data);     // копирование всех элементов до индекса
+	copy_n(person + index + 1, persNumber - index - 1, data + index); // копирование всех элементов после индекса
+	delete[] person;  // удаление старого массива и создание нового
+	person = data;
+	--persNumber;
 }
