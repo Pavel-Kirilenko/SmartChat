@@ -15,7 +15,18 @@ PersData::PersData(string persName, string persPassword, int messageNum)  // кон
 	this->persPassword = persPassword;
 	this->messageNum = messageNum;
 }
-
+string PersData::getStringValue(int fieldNumber) const // функция-геттер для вывода полей класса типа string
+{
+	return (fieldNumber == 1 ? this->persName : this->persPassword);
+}
+void PersData::setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
+{
+	(numValue == 1 ? this->persName = value : this->persPassword = value);
+}
+void PersData::setValue(int value) // функция сеттер для инициализации полей типа int
+{
+	this->messageNum = value;
+}
 
 PersDataArray::PersDataArray(int _persNumber) : // конструктор контейнера
 	persNumber{ _persNumber }                   // для хранения пользователей чата
