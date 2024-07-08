@@ -11,9 +11,11 @@ class PersData // класс с персональными данными пользователя чата
 public:
 	PersData(); // конструктор по умолчанию
 	PersData(string persName, string persPassword, int messageNum); // конструктор класса, который используется при регистрации пользователя
+	string getStringValue(int fieldNumber) const; // функция-геттер для вывода полей класса типа string
+	void setValue(int numValue, string value); // функция сеттер для инициализации полей типа string
+	void setValue(int value); // функция сеттер для инициализации полей типа int
 };
-class PersDataArray // класс-контейнер для хранения пользователей чата с их
-	// с их персональными данными
+class PersDataArray // класс-контейнер для хранения пользователей чата с их персональными данными
 {
 	int persNumber;   // количество пользователей и длина массива
 	PersData* person; // указатель на начало массива с данными пользователей
