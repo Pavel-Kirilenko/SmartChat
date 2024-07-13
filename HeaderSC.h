@@ -62,8 +62,6 @@ public:
     {
         if (index >= 0 && index < _size)
             return _data[index];
-        else
-            return 0;
     }
     unsigned getSize() // Получение размера массива
     {
