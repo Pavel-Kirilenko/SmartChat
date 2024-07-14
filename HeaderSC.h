@@ -8,38 +8,39 @@ using namespace std;
 
 class PersData // класс с персональными данными пользователя чата
 {
+protected:
 	string persName;      // имя пользователя
-	string persPassword;  // пароль пользователя
+	string persDirWord;  // пароль пользователя (адресат сообщения в классе-наследнике)
 	int messageNum;       // количество сообщений пользователя
 public:
 	PersData() // конструктор по умолчанию
 	{
 		this->persName = "persName";
-		this->persPassword = "persPassword";
+		this->persDirWord = "persDirWord";
 		this->messageNum = 1;
 	}
 
 	PersData(int messageNum) // конструктор класса, используется при регистрации пользователя
 	{
         setlocale(LC_ALL, "");                // строка для корректного отображения кириллических символов
-        string persName; string persPassword; // переменные, в которых храняться имя и пароль пользователей
+        string persName; string persDirWord; // переменные, в которых храняться имя и пароль пользователей
         cout << "Введите ваше имя: ";
         getline(cin, persName);
         cout << "Введите пароль: ";
-        getline(cin, persPassword);
+        getline(cin, persDirWord);
         this->persName = persName;
-        this->persPassword = persPassword;
+        this->persDirWord = persDirWord;
 		this->messageNum = messageNum;
 	}
 
 	string getCharValue(int fieldNumber) const // функция-геттер для вывода полей класса типа string
 	{
-		return (fieldNumber == 1 ? this->persName : this->persPassword);
+		return (fieldNumber == 1 ? this->persName : this->persDirWord);
 	}
 
 	void setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
 	{
-		(numValue == 1 ? this->persName = value : this->persPassword = value);
+		(numValue == 1 ? this->persName = value : this->persDirWord = value);
 	}
 
 	void setValue(int value) // функция сеттер для инициализации полей типа int
@@ -48,7 +49,23 @@ public:
 	}
 };
 
-
+class PersMessage final : public PersData  // класс сообщений пользователей - наследник класса PersData
+{
+    string messText;  // Содержание сообщения
+public:
+    PersMessage(string persName)
+    {
+        string _persDirWord;       // кому сообщение
+        string _messText;          // содержание сообщения
+        this->persName = persName; // от кого сообщение
+        cout << "Кому отправить сообщение (введите имя пользователя): ";
+        getline(cin, _persDirWord);
+        this->persDirWord = _persDirWord;
+        cout << "Введите текст сообщения: ";
+        getline(cin, _messText);
+        this->messText = _messText;
+    }
+};
 
 template <typename T>  class ItemDataArray  // шаблонный класс для хранения данных пользователей и сообщений
 {
