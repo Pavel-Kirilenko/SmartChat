@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-	setlocale(LC_ALL, "");                // строка для корректного отображения кириллических символов
+	setlocale(LC_ALL, "");
+	system("chcp 1251");                  // строка для корректного отображения кириллических символов
 	ItemDataArray<PersData> arrayData(0); // создание массива с данными пользователей
 	PersData person(0);                   // регистрация пользователя
 	PersData person2(0);                  // регистрация пользователя
