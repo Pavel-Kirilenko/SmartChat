@@ -10,8 +10,9 @@ class PersData // класс с персональными данными пользовател€ чата
 {
 protected:
 	string persName;      // им€ пользовател€
-	string persDirWord;  // пароль пользовател€ (адресат сообщени€ в классе-наследнике)
-	int messageNum;       // количество сообщений пользовател€
+	string persDirWord;   // пароль пользовател€ (адресат сообщени€ в классе-наследнике)
+    string textInfo;      // друга€ информаци€ о ползователе (в классе-наследние содержание сообщени€)
+	unsigned messageNum;       // количество сообщений пользовател€ (пор€дковый номер сообщени€ в классе-наследнике)
 public:
 	PersData() // конструктор по умолчанию
 	{
@@ -20,11 +21,11 @@ public:
 		this->messageNum = 1;
 	}
 
-	PersData(int messageNum) // конструктор класса, используетс€ при регистрации пользовател€
+	void InitPersData(unsigned messageNum)    // функци€ дл€ регистрации пользовател€
 	{
-        setlocale(LC_ALL, "");                // строка дл€ корректного отображени€ кириллических символов
-        string persName; string persDirWord; // переменные, в которых хран€тьс€ им€ и пароль пользователей
+        string persName; string persDirWord;  // переменные, в которых хран€тьс€ им€ и пароль пользователей
         cout << "¬ведите ваше им€: ";
+        getline(cin, persName);
         getline(cin, persName);
         cout << "¬ведите пароль: ";
         getline(cin, persDirWord);
@@ -43,7 +44,7 @@ public:
 		(numValue == 1 ? this->persName = value : this->persDirWord = value);
 	}
 
-	void setValue(int value) // функци€ сеттер дл€ инициализации полей типа int
+	void setValue(unsigned value) // функци€ сеттер дл€ инициализации полей типа unsigned
 	{
 		this->messageNum = value;
 	}
@@ -51,19 +52,20 @@ public:
 
 class PersMessage final : public PersData  // класс сообщений пользователей - наследник класса PersData
 {
-    string messText;  // —одержание сообщени€
+    string textInfo;  // —одержание сообщени€
 public:
-    PersMessage(string persName)
+    void InitPersMessage(string persName, unsigned messageNum)  //  функци€ создани€ сообщени€
     {
-        string _persDirWord;       // кому сообщение
-        string _messText;          // содержание сообщени€
-        this->persName = persName; // от кого сообщение
+        string _persDirWord;            // кому сообщение
+        string _textInfo;               // содержание сообщени€
+        this->persName = persName;      // от кого сообщение
+        this->messageNum = messageNum;  // пор€дковый номер сообщени€
         cout << " ому отправить сообщение (введите им€ пользовател€): ";
         getline(cin, _persDirWord);
         this->persDirWord = _persDirWord;
         cout << "¬ведите текст сообщени€: ";
-        getline(cin, _messText);
-        this->messText = _messText;
+        getline(cin, _textInfo);
+        this->textInfo = _textInfo;
     }
 };
 
@@ -72,7 +74,6 @@ template <typename T>  class ItemDataArray  // шаблонный класс дл€ хранени€ данн
 private:
 	unsigned _size;		// –азмер массива
 	T* _data;			// ”казатель на массив
-
 public:
     ItemDataArray(unsigned size) //  онструктор
     {
@@ -83,7 +84,7 @@ public:
     {
         delete[] _data;
     }
-    void setItem(int index, T val) // «апись элемента в массив
+    void setItem(unsigned index, T val) // «апись элемента в массив
     {
         if (index >= 0 && index < _size)
             _data[index] = val;
@@ -96,7 +97,7 @@ public:
         _data = data;
         ++_size; // увеличение пол€ размера массива на единицу
     }
-    T getItem(int index) const // ѕолучение элемента массива
+    T getItem(unsigned index) const // ѕолучение элемента массива
     {
         if (index >= 0 && index < _size)
             return _data[index];
