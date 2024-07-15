@@ -11,7 +11,7 @@ class PersData // класс с персональными данными пользователя чата
 protected:
 	string persName;      // имя пользователя
 	string persDirWord;   // пароль пользователя (адресат сообщения в классе-наследнике)
-    string textInfo;      // другая информация о ползователе (в классе-наследние содержание сообщения)
+    string textInfo;      // другая информация о пользователе (в классе-наследнике содержание сообщения)
 	unsigned messageNum;       // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
 public:
 	PersData() // конструктор по умолчанию
@@ -26,7 +26,6 @@ public:
         string persName; string persDirWord;  // переменные, в которых храняться имя и пароль пользователей
         cout << "Введите ваше имя: ";
         getline(cin, persName);
-        getline(cin, persName);
         cout << "Введите пароль: ";
         getline(cin, persDirWord);
         this->persName = persName;
@@ -36,7 +35,12 @@ public:
 
 	string getCharValue(int fieldNumber) const // функция-геттер для вывода полей класса типа string
 	{
-		return (fieldNumber == 1 ? this->persName : this->persDirWord);
+        switch (fieldNumber)
+        {
+        case 1: return this->persName; break;
+        case 2: return this->persDirWord; break;
+        case 3: return this->textInfo;
+        }
 	}
 
 	void setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
