@@ -44,6 +44,11 @@ public:
         }
 	}
 
+    unsigned getCharValue() const // функция-геттер для вывода поля класса типа unsigned
+    {
+        return this->messageNum;
+    }
+
 	void setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
 	{
 		(numValue == 1 ? this->persName = value : this->persDirWord = value);
