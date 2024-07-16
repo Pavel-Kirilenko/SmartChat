@@ -12,7 +12,7 @@ protected:
 	string persName;      // имя пользователя
 	string persDirWord;   // пароль пользователя (адресат сообщения в классе-наследнике)
     string textInfo;      // другая информация о пользователе (в классе-наследнике содержание сообщения)
-	unsigned messageNum;  // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
+	int messageNum;  // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
 public:
 	PersData() // конструктор по умолчанию
 	{
@@ -22,7 +22,7 @@ public:
 		this->messageNum = 0;
 	}
 
-	void InitPersData(unsigned messageNum)    // функция для регистрации пользователя
+	void InitPersData(int messageNum)    // функция для регистрации пользователя
 	{
         string persName; string persDirWord;  // переменные, в которых хранятся имя и пароль пользователей
         cout << "Введите ваше имя: ";
@@ -44,12 +44,17 @@ public:
         }
 	}
 
+    int getCharValue() const // функция-геттер для вывода поля класса типа int
+    {
+        return this->messageNum;
+    }
+
 	void setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
 	{
 		(numValue == 1 ? this->persName = value : this->persDirWord = value);
 	}
 
-	void setValue(unsigned value) // функция сеттер для инициализации полей типа unsigned
+	void setValue(int value) // функция сеттер для инициализации полей типа int
 	{
 		this->messageNum = value;
 	}
@@ -59,7 +64,7 @@ class PersMessage final : public PersData  // класс сообщений пользователей - на
 {
     //string textInfo;  // Содержание сообщения
 public:
-    void InitPersMessage(string persName, unsigned messageNum)  //  функция создания сообщения
+    void InitPersMessage(string persName, int messageNum)  //  функция создания сообщения
     {
         string _persDirWord;            // кому сообщение
         string _textInfo;               // содержание сообщения
@@ -77,10 +82,10 @@ public:
 template <typename T>  class ItemDataArray  // шаблонный класс для хранения данных пользователей и сообщений
 {
 private:
-	unsigned _size;		// Размер массива
+	int _size;		// Размер массива
 	T* _data;			// Указатель на массив
 public:
-    ItemDataArray(unsigned size) // Конструктор
+    ItemDataArray(int size) // Конструктор
     {
         _size = size;
         _data = new T[_size];
@@ -89,7 +94,7 @@ public:
     {
         delete[] _data;
     }
-    void setItem(unsigned index, T val) // Запись элемента в массив
+    void setItem(int index, T val) // Запись элемента в массив
     {
         if (index >= 0 && index < _size)
             _data[index] = val;
@@ -102,12 +107,12 @@ public:
         _data = data;
         ++_size; // увеличение поля размера массива на единицу
     }
-    T getItem(unsigned index) const // Получение элемента массива
+    T getItem(int index) const // Получение элемента массива
     {
         if (index >= 0 && index < _size)
             return _data[index];
     }
-    unsigned getSize() // Получение размера массива
+    int getSize() // Получение размера массива
     {
         return _size;
     }
@@ -135,11 +140,11 @@ public:
         _data = nullptr;
         _size = 0;
     }
-    void Remove(unsigned index) // удаление элемента
+    void Remove(int index) // удаление элемента
     {
         try
         {
-            if (index < 0 && index >= _size) // проверка находится ли удаляемый элемент в пределах массива 
+            if (index < 0 || index >= _size) // проверка находится ли удаляемый элемент в пределах массива 
             {
                 throw "Сообщение с таким номером не найдено!";
             }
@@ -153,12 +158,15 @@ public:
             std::copy_n(_data + index + 1, _size - index - 1, data + index); // копирование всех элементов за удаляемым элементом
             delete[] _data; // удаление старых данных
             _data = data;
-            --_size; // уменьшение поля размера массива на единицу
+            --_size;        // уменьшение поля размера массива на единицу
+            cout << "Сообщение удалено!" << endl;
         }
-        catch (string exception)
+        catch (const char* exception)
         {
             cout << exception << endl;  // вывод на консоль фразы "Сообщение с таким номером не найдено!"
         }
     }
 };
+
+// 17.07.2024 by Pavel Kirilenko
 
