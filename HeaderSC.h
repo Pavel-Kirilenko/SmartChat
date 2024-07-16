@@ -12,18 +12,19 @@ protected:
 	string persName;      // имя пользователя
 	string persDirWord;   // пароль пользователя (адресат сообщения в классе-наследнике)
     string textInfo;      // другая информация о пользователе (в классе-наследнике содержание сообщения)
-	unsigned messageNum;       // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
+	unsigned messageNum;  // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
 public:
 	PersData() // конструктор по умолчанию
 	{
 		this->persName = "persName";
 		this->persDirWord = "persDirWord";
-		this->messageNum = 1;
+        this->textInfo = "textInfo";
+		this->messageNum = 0;
 	}
 
 	void InitPersData(unsigned messageNum)    // функция для регистрации пользователя
 	{
-        string persName; string persDirWord;  // переменные, в которых храняться имя и пароль пользователей
+        string persName; string persDirWord;  // переменные, в которых хранятся имя и пароль пользователей
         cout << "Введите ваше имя: ";
         getline(cin, persName);
         cout << "Введите пароль: ";
@@ -56,7 +57,7 @@ public:
 
 class PersMessage final : public PersData  // класс сообщений пользователей - наследник класса PersData
 {
-    string textInfo;  // Содержание сообщения
+    //string textInfo;  // Содержание сообщения
 public:
     void InitPersMessage(string persName, unsigned messageNum)  //  функция создания сообщения
     {
@@ -64,7 +65,7 @@ public:
         string _textInfo;               // содержание сообщения
         this->persName = persName;      // от кого сообщение
         this->messageNum = messageNum;  // порядковый номер сообщения
-        cout << "Кому отправить сообщение (введите имя пользователя): ";
+        cout << "Кому отправить сообщение (введите имя пользователя или 'всем'): ";
         getline(cin, _persDirWord);
         this->persDirWord = _persDirWord;
         cout << "Введите текст сообщения: ";
@@ -136,18 +137,28 @@ public:
     }
     void Remove(unsigned index) // удаление элемента
     {
-        assert(index >= 0 && index < _size); // проверка находится ли удаляемый элемент в пределах массива (реализовтаь с помощью throw/catch
-        if (_size == 1) // если массив состоит только из одного элемента, то он удаляется
+        try
         {
-            Erase();
-            return;
+            if (index < 0 && index >= _size) // проверка находится ли удаляемый элемент в пределах массива 
+            {
+                throw "Сообщение с таким номером не найдено!";
+            }
+            if (_size == 1) // если массив состоит только из одного элемента, то он удаляется
+            {
+                Erase();
+                return;
+            }
+            T* data = new T[_size - 1]; // создание нового массива на один элемент меньше существующего
+            std::copy_n(_data, index, data); // копирование в новый массив всех элементов до номера удаляемого элемента
+            std::copy_n(_data + index + 1, _size - index - 1, data + index); // копирование всех элементов за удаляемым элементом
+            delete[] _data; // удаление старых данных
+            _data = data;
+            --_size; // уменьшение поля размера массива на единицу
         }
-        T* data = new T[_size - 1]; // создание нового массива на один элемент меньше существующего
-        std::copy_n(_data, index, data); // копирование в новый массив всех элементов до номера удаляемого элемента
-        std::copy_n(_data + index + 1, _size - index - 1, data + index); // копирование всех элементов за удаляемым элементом
-        delete[] _data; // удаление старых данных
-        _data = data;
-        --_size; // уменьшение поля размера массива на единицу
+        catch (string exception)
+        {
+            cout << exception << endl;  // вывод на консоль фразы "Сообщение с таким номером не найдено!"
+        }
     }
 };
 
