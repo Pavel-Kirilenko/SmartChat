@@ -23,8 +23,5 @@
     <ClCompile Include="MainSC.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="RealSC.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
