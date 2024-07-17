@@ -51,4 +51,6 @@ void PersMessage::initPersMessage(string persName, int messageNum)  //  функция 
     cout << "Введите текст сообщения: ";
     getline(cin, _textInfo);
     this->textInfo = _textInfo;
-}
+} 
+
+// 18.07.2024 by Pavel Kirilenko

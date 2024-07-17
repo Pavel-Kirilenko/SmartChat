@@ -29,7 +29,7 @@ int main()
 	                              // программы при вводе некорректных данных
 	while (true)
 	{
-		while (persPresence == false)  // цикл продолжается пока пользователь не вошел в аккаунт или не зарегистирировался
+		while (persPresence == false)  // цикл продолжается пока пользователь не вошел в аккаунт или не зарегистрировался
 		{
 			while (contProcNumber != "1" && contProcNumber != "2" && contProcNumber != "3")  //  защита от некорректного ввода выбора дальнейших действий
 			{
@@ -70,7 +70,7 @@ int main()
 
 			if (contProcNumber == "2")
 			{
-				curPerson.InitPersData(0);                          // регистрация пользователя
+				curPerson.initPersData(0);                          // регистрация пользователя
 				for (int i = 0; i < persArray.getSize(); i++)       // проверка есть ли уже пользователь с данным именем в чате
 				{
 					arrPerson = persArray.getItem(i);
@@ -154,7 +154,7 @@ int main()
 					cout << "<" << arrPerson.getCharValue(1) << "> ";   //  вывод имен других пользователей
 				}
 				cout << endl;                                           //  переход на новую строку для лучшей читаемости информации
-				curMessage.InitPersMessage(curName, messNumber);        //  формирование сообщения
+				curMessage.initPersMessage(curName, messNumber);        //  формирование сообщения
 				messArray.setItem(messArray.getSize(), curMessage);     //  занесение сообщения в массив сообщений
 				messNumber++;  //  увеличение счетчика сообщений на единицу
 				contProcNumber = "0";
@@ -167,7 +167,7 @@ int main()
 	return 0;
 }
 
-// 17.07.2024 by Pavel Kirilenko
+// 18.07.2024 by Pavel Kirilenko
 
 
 
