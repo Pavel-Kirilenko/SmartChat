@@ -13,69 +13,20 @@ protected:
     string textInfo;      // другая информация о пользователе (в классе-наследнике содержание сообщения)
 	int messageNum;  // количество сообщений пользователя (порядковый номер сообщения в классе-наследнике)
 public:
-	PersData() // конструктор по умолчанию
-	{
-		this->persName = "persName";
-		this->persDirWord = "persDirWord";
-        this->textInfo = "textInfo";
-		this->messageNum = 0;
-	}
+    PersData(); // конструктор по умолчанию
+    void initPersData(int messageNum);    // функция для регистрации пользователя
+    string getCharValue(int fieldNumber) const; // функция-геттер для вывода полей класса типа string
+    int getCharValue() const; // функция-геттер для вывода поля класса типа int
+    void setValue(int numValue, string value); // функция сеттер для инициализации полей типа string
 
-	void InitPersData(int messageNum)    // функция для регистрации пользователя
-	{
-        string persName; string persDirWord;  // переменные, в которых хранятся имя и пароль пользователей
-        cout << "Введите ваше имя: ";
-        getline(cin, persName);
-        cout << "Введите пароль: ";
-        getline(cin, persDirWord);
-        this->persName = persName;
-        this->persDirWord = persDirWord;
-		this->messageNum = messageNum;
-	}
-
-	string getCharValue(int fieldNumber) const // функция-геттер для вывода полей класса типа string
-	{
-        switch (fieldNumber)
-        {
-        case 1: return this->persName; break;
-        case 2: return this->persDirWord; break;
-        case 3: return this->textInfo;
-        }
-	}
-
-    int getCharValue() const // функция-геттер для вывода поля класса типа int
-    {
-        return this->messageNum;
-    }
-
-	void setValue(int numValue, string value) // функция сеттер для инициализации полей типа string
-	{
-		(numValue == 1 ? this->persName = value : this->persDirWord = value);
-	}
-
-	void setValue(int value) // функция сеттер для инициализации полей типа int
-	{
-		this->messageNum = value;
-	}
+    void setValue(int value); // функция сеттер для инициализации полей типа int
 };
 
 class PersMessage final : public PersData  // класс сообщений пользователей - наследник класса PersData
 {
     //string textInfo;  // Содержание сообщения
 public:
-    void InitPersMessage(string persName, int messageNum)  //  функция создания сообщения
-    {
-        string _persDirWord;            // кому сообщение
-        string _textInfo;               // содержание сообщения
-        this->persName = persName;      // от кого сообщение
-        this->messageNum = messageNum;  // порядковый номер сообщения
-        cout << "Кому отправить сообщение (введите имя пользователя или 'всем'): ";
-        getline(cin, _persDirWord);
-        this->persDirWord = _persDirWord;
-        cout << "Введите текст сообщения: ";
-        getline(cin, _textInfo);
-        this->textInfo = _textInfo;
-    }
+    void initPersMessage(string persName, int messageNum);  //  функция создания сообщения
 };
 
 template <typename T>  class ItemDataArray  // шаблонный класс для хранения данных пользователей и сообщений
